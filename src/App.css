@@ -1,0 +1,10 @@
+#root{
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+}
+
+.card-container{
+    display: flex;
+    justify-content: space-around;
+}
