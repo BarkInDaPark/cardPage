@@ -9,6 +9,7 @@ import NotFoundPage from './pages/Notfoundpage'
 import Contact from './pages/Contact'
 import Profiles from './pages/Profiles'
 import ProfilePage from './pages/ProfilePage'
+import Cards from './components/Cards'
 
 const router = createBrowserRouter([{
   path: '/',
@@ -31,6 +32,10 @@ const router = createBrowserRouter([{
       path:'/profiles/:profileId',
       element: <ProfilePage />
     }],
+},
+{
+  path:'/Cards',
+  element: <Cards />
 },]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
