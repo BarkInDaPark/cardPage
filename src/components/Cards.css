@@ -4,13 +4,12 @@
     background-color: rgb(32, 1, 26);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(206, 8, 8, 0.849);
-    padding: 0 5rem 5rem 5rem;
+    padding: 0 1rem 1rem 1rem;
     margin: 3rem;
-    width: 5rem;
     height: 10rem;
-    width: 4rem;
-    text-align:start;
-    line-height: 50px;
+    width: 12rem;
+    text-align:center;
+    line-height: 50px;;
 
     
 }
@@ -18,11 +17,10 @@
 .card-container {
     background-color: #282c34;
     min-height: 100vh;
-
     display: flex;
     flex-wrap:wrap;
+    justify-content: flex-start;
     align-content: flex-start;
-
     gap: 0;
     row-gap: 0;
     padding: 0;
