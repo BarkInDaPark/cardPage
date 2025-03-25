@@ -1,7 +1,7 @@
 .navbar {
     background-color: #333;
     overflow: hidden;
-    position: fixed; /* Add this line */
+    position: sticky; /* Add this line */
     top: 0; /* Add this line */
     width: 100%; /* Add this line to ensure the navbar spans the full width */
 }
