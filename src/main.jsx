@@ -11,6 +11,7 @@ import Profiles from './pages/Profiles'
 import ProfilePage from './pages/ProfilePage'
 import Cards from './components/Cards'
 import Navbar from './components/Navbar'
+import TodoList from './pages/TodoList'
 
 const Layout = () => {
   return (
@@ -49,6 +50,10 @@ const router = createBrowserRouter([{
     {
       path:'/Cards',
       element: <Cards />,
+    },
+    {
+      path: '/todo',
+      element: <TodoList />,
     }
   ]
 },

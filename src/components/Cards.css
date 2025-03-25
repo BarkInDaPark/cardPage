@@ -9,7 +9,7 @@
     width: 5rem;
     height: 10rem;
     width: 4rem;
-    text-align: center;
+    text-align:start;
     line-height: 50px;
 
     
@@ -17,12 +17,14 @@
 
 .card-container {
     background-color: #282c34;
-    height: 100%;
-    width: 100%;
     min-height: 100vh;
+
     display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
+    flex-wrap:wrap;
+    align-content: flex-start;
+
+    gap: 0;
+    row-gap: 0;
     padding: 0;
     margin: 0;
 
