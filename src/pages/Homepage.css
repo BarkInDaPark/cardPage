@@ -10,6 +10,19 @@ body {
     background-color: #282c34;
     color: white;
 }
+.todo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #282c34;
+    color: white;
+}
+
+.taskDone {
+    text-decoration: line-through;
+    }
 
 .button{
     background-color: #061f25;
