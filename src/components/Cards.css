@@ -13,6 +13,13 @@
 
     
 }
+.card:hover{
+    background-color: rgb(32, 1, 26);
+    box-shadow: 0 4px 8px rgba(250, 50, 50, 0.849);
+    line-height: 80px;;
+    color: white;
+    transition: 0.5s;
+}
 
 .card-container {
     background-color: #282c34;

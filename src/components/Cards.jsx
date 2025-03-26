@@ -5,7 +5,7 @@ function Cards({ name }) {
     if (!name){
         name = "no name";
     }
-    const cardNameArr = ["BlackJack", "car", "Run", "draw", "jump"];
+    const cardNameArr = ["BlackJack", "car", "Run", "draw", "jump", "bike", "skate", "ride", "walk", "swim"];
     
     return (
         <div className = "card-container">
