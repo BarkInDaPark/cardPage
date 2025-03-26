@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import './components/Cards.css'
+import './components/Bricks.css'
 import './App.css'
-import Cards from './components/Cards';
+import Cards from './components/Bricks';
 
 
 function App() {

@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './monocle.png';
 import './Homepage.css';
 import Navbar from '../components/Navbar'; // Import the Navbar component
-import Cards from '../components/Cards';
+import Bricks from '../components/Bricks';
 import { Link, useNavigate, Outlet } from 'react-router-dom';
 
 function Homepage() {
@@ -10,7 +10,7 @@ function Homepage() {
     return (
         <div>
             <div className='homepage'>
-                <button className= 'button' onClick={() => navigate('/cards')}>Enter</button>
+                <button className= 'button' onClick={() => navigate('/Bricks')}>Enter</button>
                 <h1>
                      < img src={logo} alt="Logo" className="spin-logo" />
                     Gents club!

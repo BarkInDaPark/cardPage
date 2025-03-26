@@ -9,9 +9,10 @@ import NotFoundPage from './pages/Notfoundpage'
 import Contact from './pages/Contact'
 import Profiles from './pages/Profiles'
 import ProfilePage from './pages/ProfilePage'
-import Cards from './components/Cards'
+import Bricks from './components/Bricks'
 import Navbar from './components/Navbar'
 import TodoList from './pages/TodoList'
+import Blackjack from './games/Blackjack'
 
 const Layout = () => {
   return (
@@ -48,12 +49,16 @@ const router = createBrowserRouter([{
         }],
     },
     {
-      path:'/Cards',
-      element: <Cards />,
+      path:'/Bricks',
+      element: <Bricks />,
     },
     {
       path: '/todo',
       element: <TodoList />,
+    },
+    {
+      path: '/blackJack',
+      element: <Blackjack />,
     }
   ]
 },
