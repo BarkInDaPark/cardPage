@@ -4,6 +4,8 @@
     position: sticky; /* Add this line */
     top: 0; /* Add this line */
     width: 100%; /* Add this line to ensure the navbar spans the full width */
+    justify-content: center;
+    display: flex;
 }
 
 .navbar ul {
@@ -13,7 +15,8 @@
     margin-left: 5rem;
     
     display: flex-inline;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
 }
 
 .navbar li {
@@ -24,10 +27,12 @@
     display: block;
     color: white;
     text-align: center;
-    padding: 6px 16px;
+    padding: 6px 50px;
     text-decoration: none;
 }
 
 .navbar li a:hover {
     background-color: #111;
+    color: rgb(20, 66, 45);
+    transition: 0.5s;;
 }
