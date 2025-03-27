@@ -8,9 +8,10 @@
     margin: 3rem;
     height: 10rem;
     width: 12rem;
-    text-align:center;
+    text-align: center;
     line-height: 50px;
     font: inherit;
+    font-size: 30px;
     
 }
 .brick:hover{
@@ -18,7 +19,8 @@
     box-shadow: 0 4px 8px rgba(250, 50, 50, 0.849);
     line-height: 80px;;
     color: white;
-    transition: 0.5s;
+    font-size: 25px;
+    transition: 1s;
     
 }
 
