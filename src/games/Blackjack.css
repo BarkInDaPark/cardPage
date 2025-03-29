@@ -2,10 +2,12 @@
     color: rgb(0, 0, 0);
     background-color: rgb(0, 128, 28);
     height: 100vh;
+    display: block;
 
 }
 
 .startButton {
+    position: absolute;
     background-color: rgb(32, 1, 26);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(206, 8, 8, 0.849);
@@ -17,6 +19,40 @@
     line-height: 50px;
     font: inherit;
     font-size: 30px;
+    bottom: 10px;
+    left: 100px;
+}
+.hitButton{
+    position: absolute;
+    background-color: rgb(32, 1, 26);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(206, 8, 8, 0.849);
+    padding: 0 1rem 1rem 1rem;
+    margin: 3rem;
+    height: 5rem;
+    width: 10rem;
+    text-align: center;
+    line-height: 50px;
+    font: inherit;
+    font-size: 30px;
+    bottom: 10px;
+    left: 300px;
+}
+.stayButton{
+    position: absolute;
+    background-color: rgb(32, 1, 26);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(206, 8, 8, 0.849);
+    padding: 0 1rem 1rem 1rem;
+    margin: 3rem;
+    height: 5rem;
+    width: 10rem;
+    text-align: center;
+    line-height: 50px;
+    font: inherit;
+    font-size: 30px;
+    bottom: 10px;
+    left: 500px;
 }
 
 .start{
