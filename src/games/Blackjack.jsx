@@ -20,12 +20,16 @@ function Blackjack() {
         <div className = 'back'>
             <h1>blackjack</h1>
             <h1>{started ? "" : rules}</h1>
+            <div className='player-container'>
+                <h1 className='player'><Deck /></h1>
+                <h1 className='player'><Deck /></h1>
+                <h1 className='player'><Deck /></h1>
+            </div>
             <div >
-            <button className = "startButton" onClick={() => (buttonPressHandle())}>{startButt}</button>
-            
-            {started ? <button className = "hitButton">Hit</button> : ""}
-            {started ? <button className = "stayButton">Stay</button> : ""}
-            <div><Deck /></div>
+                <button className = "startButton" onClick={() => (buttonPressHandle())}>{startButt}</button>
+                {started ? <button className = "hitButton">Hit</button> : ""}
+                {started ? <button className = "stayButton">Stay</button> : ""}
+            <div></div>
             
             </div>
         </div>

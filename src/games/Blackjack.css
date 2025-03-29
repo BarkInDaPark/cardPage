@@ -58,3 +58,26 @@
 .start{
     color: chocolate;
 }
+
+.player-container{
+    display: flex;
+    height: 25rem;
+    width: 30rem;
+    line-height: -10px;
+    padding-top: 5px;
+    
+    
+    
+}
+
+.player-container:hover{
+    line-height: 1rem;
+    transition: 1s;
+}
+
+.player{
+    border: 3rem;
+    background-color: antiquewhite;
+    outline: 2px solid black;
+    line-height: 10px;
+}
