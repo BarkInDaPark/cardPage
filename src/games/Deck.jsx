@@ -70,9 +70,10 @@ function Deck(){
 
     const pop = () => {
         if (stack.length === 0) return;
-        setCard(peek());
-        console.log("poped: " + card  );
-        setStack(stack.slice(0, -1));
+        // const topCard = stack[0];
+        setCard(stack[0]);
+        setStack((prevStack)=> prevStack.slice(0, -1));
+        console.log("poped: " + card.number  );
     };
 
     const peek = () => {
@@ -83,7 +84,7 @@ function Deck(){
         setStack(shuffleStack)
     };
 
-    // const addDeck = () => {
+    // const shuffleDeck = () => {
     //     for(let x = 0; x < 4; x++){
     //         let name;
     //         if(x === 0)
@@ -107,41 +108,45 @@ function Deck(){
     //     console.log("deck shuffled");
     // }
 
-    const addDeck = () => {
-        const newStack = [];
-        for (let x = 0; x < 4; x++) {
-            let name;
-            if (x === 0) name = "S"; // S as in Spades
-            else if (x === 1) name = "H"; // H as in Hearts
-            else if (x === 2) name = "D"; // D as in Diamonds
-            else name = "C"; // C as in Clubs
+    const shuffleDeck = () => {
+        // const newStack = [];
+        // for (let x = 0; x < 4; x++) {
+        //     let name;
+        //     if (x === 0) name = "S"; // S as in Spades
+        //     else if (x === 1) name = "H"; // H as in Hearts
+        //     else if (x === 2) name = "D"; // D as in Diamonds
+        //     else name = "C"; // C as in Clubs
 
-            for (let i = 1; i <= 13; i++) {
-                newStack.push({ text: name, number: i });
-                console.log(stack[i].text + stack[i].number)
-            }
-        }
-        setStack(newStack);
-        console.log("cards pushed");
+        //     for (let i = 1; i <= 13; i++) {
+        //         newStack.push({ text: name, number: i });
+        //         console.log(stack[i].text + stack[i].number)
+        //     }
+        // }
+        // setStack(newStack);
+        // console.log("cards pushed");
         shuffle();
         setDeck(true);
         console.log("deck shuffled");
     };
 
     useEffect(() => {
-        console.log(stack.length - 1);
-    }, [stack])
+    }, [deck])
     useEffect(() => {
         if (!deck) {
-            addDeck();
-            
+            shuffleDeck();
+            setDeck((prev) => !prev)
+            pop();
+            // pop();  
         }
-    }, [deck]);
+        else{
+            pop();
+        }
+    }, []);
     
 
-
     return (
-        <h1>{stack[13] ? `${stack[13].text} ${stack[13].number}` : "Loading..."}</h1>
+        // <h1>{stack[0] ? `${stack[0].text} ${stack[0].number}` : "Loading..."}</h1>
+        <h1>{card.text}{card.number}</h1>
 
     );
 }
