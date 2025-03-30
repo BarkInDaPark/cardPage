@@ -61,23 +61,26 @@
 
 .player-container{
     display: flex;
-    height: 25rem;
-    width: 30rem;
-    line-height: -10px;
-    padding-top: 5px;
+    padding-left: 25%;
+    padding-top: 25%;
+
+    
     
     
     
 }
 
-.player-container:hover{
-    line-height: 1rem;
+.player:hover{
+    border-radius: 5rem;
     transition: 1s;
 }
 
 .player{
+    height: 25rem;
+    width: 30rem;
     border: 3rem;
+    border-radius: 1rem;
+    margin: 1rem;
     background-color: antiquewhite;
     outline: 2px solid black;
-    line-height: 10px;
 }
