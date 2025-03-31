@@ -6,11 +6,14 @@ function Blackjack() {
     const [started, setstarted] = useState(false);
     const [showRules, setShowRules] = useState(true);
     const [playerScore, setplayerScore] = useState(0);
-    const [dealerScore, setdealerScore] = useState(0);
     const [playerCards, setPlayerCards] = useState(0);
+    const [playerFat, setPlayerFat] = useState(false);
+    const [dealerScore, setdealerScore] = useState(0);
+    
     const rules = "Rules: press hit to get aditional card, if you go above 21 you become fat and lose";
 
     const [deck , setDeck] = useState(false);
+    const [deckIndex, setDeckIndex] = useState(0);
     const [card, setCard] = useState([{text: "", number: 0},{text: "", number: 0},{text: "", number: 0},]);
     const [stack, setStack] = useState([
         {text: "H", number: 1},
@@ -74,10 +77,23 @@ function Blackjack() {
     const pop = () => {
         if (stack.length === 0) return;
         // const topCard = stack[0];
-        setCard[0] = stack[0];
-        playerCards((prevPlayerCards) => prevPlayerCards + 1);
-        setStack((prevStack)=> prevStack.slice(0, -1));
-        console.log("poped: " + card.number  );
+        setCard((prevCards) => {
+            const updatedCards = [...prevCards]; // Create a copy of the current card array
+            updatedCards[playerCards] = stack[deckIndex]; // Update the first card with stack[0]
+            return updatedCards; // Return the updated array
+        });
+        
+        setDeckIndex((prevIndex) => prevIndex + 1);
+        console.log("player has: " + (playerCards + 1) + " cards");
+        setStack((prevStack)=> prevStack.slice(0,-1));
+        console.log(stack.length);
+        //console.log("poped: " + card[0].number  ); 1step behind
+        // countScore(card[playerCards].number);
+        setPlayerCards((prevCards) => prevCards + 1);
+    };
+
+    const countScore = (score) => {
+        setplayerScore((prevScore) => prevScore + score);
     };
 
     const shuffleDeck = () => {
@@ -89,6 +105,7 @@ function Blackjack() {
     const shuffle = () => {
         const shuffleStack = [...stack].sort(() => Math.random() - 0.5);
         setStack(shuffleStack)
+        pop();
     };
 
     useEffect(() => {
@@ -106,9 +123,11 @@ function Blackjack() {
 
     const buttonStartQuitPressed = () =>{
         // setPlayerCards(1);
-        pop();
+        
         setstarted((prev) => !prev);
         setstartButt(started ? "Start" : "quit");
+        started ? "": shuffle();
+        
         
         
         console.log(started);
@@ -119,6 +138,19 @@ function Blackjack() {
     const buttonStayPressed = () =>{
         
     };
+    useEffect (() => {
+        setplayerScore(card[0].number + card[1].number + card[2].number)
+
+        
+    }, [card])
+    useEffect(() => {
+        if(playerScore > 21)
+            {
+                setPlayerFat((prev) => !prev);
+                buttonStartQuitPressed();
+            }
+    }, [playerScore])
+    // setplayerScore(card[0].number + card[1].number + card[2].number)
 
     return(
         <div className = 'back'>
@@ -130,16 +162,22 @@ function Blackjack() {
                 {/* <h1 className='player'>{playerCards >= 1 ? <Deck onCardDraw={handleCardValue}/> : ""}</h1>
                 <h1 className='player'>{playerCards >= 2 ? <Deck onCardDraw={handleCardValue}/> : ""}</h1>
                 <h1 className='player'>{playerCards >= 3 ? <Deck onCardDraw={handleCardValue}/> : ""}</h1> */}
-                <h1 className='player'>{playerCards >= 1 ? "" : ""}</h1>
-                <h1 className='player'>{playerCards >= 2 ? "" : ""}</h1>
-                <h1 className='player'>{playerCards >= 3 ? "" : ""}</h1>
+                <h1 className='player'>{playerCards >= 1 ? card[0].text + card[0].number : ""}</h1>
+                <h1 className='player'>{playerCards >= 2 ? card[1].text + card[1].number : ""}</h1>
+                <h1 className='player'>{playerCards >= 3 ? card[2].text + card[2].number : ""}</h1>
             </div>
             :
             ""};
             <div >
-                <button className = "startButton" onClick={() => (buttonStartQuitPressed())}>{startButt}</button>
-                {/* {started && playerCards < 4 ? <button className = "hitButton" onClick={buttonHitPressed}>Hit</button> : ""}
-                {started ? <button className = "stayButton">Stay</button> : ""} */}
+                <button className = "startButton" onClick={() => (buttonStartQuitPressed(), countScore())}>
+                    {startButt}
+                </button>
+                {started && playerCards < 4 && !playerFat ? <button className = "hitButton" onClick={buttonHitPressed}>
+                    Hit
+                </button> : ""}
+                {started && !playerFat ? <button className = "stayButton">
+                    Stay
+                </button> : ""} 
             <div></div>
             
             </div>
