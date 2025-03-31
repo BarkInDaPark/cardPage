@@ -105,7 +105,7 @@ function Blackjack() {
     const shuffle = () => {
         const shuffleStack = [...stack].sort(() => Math.random() - 0.5);
         setStack(shuffleStack)
-        pop();
+        
     };
 
     useEffect(() => {
@@ -127,6 +127,7 @@ function Blackjack() {
         setstarted((prev) => !prev);
         setstartButt(started ? "Start" : "quit");
         started ? "": shuffle();
+        pop();
         
         
         
@@ -148,6 +149,13 @@ function Blackjack() {
             {
                 setPlayerFat((prev) => !prev);
                 buttonStartQuitPressed();
+                for(let i = 0; i < 3; i++){
+                    setCard((prevCards) => {
+                        const updatedCards = [...prevCards]
+                        updatedCards[i] = [{text: "", number: 0}];
+                        return updatedCards;
+                    })
+                }
             }
     }, [playerScore])
     // setplayerScore(card[0].number + card[1].number + card[2].number)
@@ -155,7 +163,8 @@ function Blackjack() {
     return(
         <div className = 'back'>
             <h1>blackjack</h1>
-            <h1>Score: {playerScore}</h1>
+            <h1>{playerFat ? "YOUR FAT": "" }</h1>
+            <h1>Score: {playerFat ? "" : playerScore}</h1>
             <h1>{started ? "" : rules}</h1>
             {started ? 
             <div className='player-container'>
@@ -169,7 +178,7 @@ function Blackjack() {
             :
             ""};
             <div >
-                <button className = "startButton" onClick={() => (buttonStartQuitPressed(), countScore())}>
+                <button className = "startButton" onClick={() => (buttonStartQuitPressed())}>
                     {startButt}
                 </button>
                 {started && playerCards < 4 && !playerFat ? <button className = "hitButton" onClick={buttonHitPressed}>
