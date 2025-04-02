@@ -84,3 +84,16 @@
     background-color: antiquewhite;
     outline: 2px solid black;
 }
+
+.log{
+    background-color: antiquewhite;
+    display: block;
+    position: absolute;
+    border-radius: 2rem;
+    border-color: black;
+    outline: auto;
+    margin: 4rem;
+    padding: 0 10rem 10rem 10rem;
+    
+    font-size: small;
+}

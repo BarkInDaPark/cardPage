@@ -9,12 +9,15 @@ function Blackjack() {
     const [playerCards, setPlayerCards] = useState(0);
     const [playerFat, setPlayerFat] = useState(false);
     const [dealerScore, setdealerScore] = useState(0);
+    const [dealerCards, setDealerCards] = useState(0);
+
     
     const rules = "Rules: press hit to get aditional card, if you go above 21 you become fat and lose";
 
     const [deck , setDeck] = useState(false);
     const [deckIndex, setDeckIndex] = useState(0);
     const [card, setCard] = useState([{text: "", number: 0},{text: "", number: 0},{text: "", number: 0},]);
+    const [dealerCard, setDealerCard] = useState([{text: "", number: 0},{text: "", number: 0},{text: "", number: 0},]);//dealer
     const [stack, setStack] = useState([
         {text: "H", number: 1},
         {text: "H", number: 2},
@@ -72,27 +75,34 @@ function Blackjack() {
         {text: "C", number: 12},
         {text: "C", number: 13},
         {text: "C", number: 14},
-    ])
+    ]);
+    const [log, setLog] = useState ([]);
+    const [logIndex, setLogIndex] = useState(0);
 
-    const pop = () => {
+    const pop = (dealer) => {
         if (stack.length === 0) return;
         // const topCard = stack[0];
-        setCard((prevCards) => {
-            const updatedCards = [...prevCards]; // Create a copy of the current card array
-            updatedCards[playerCards] = stack[deckIndex]; // Update the first card with stack[0]
-            return updatedCards; // Return the updated array
-        });
+        if(dealer){
+            setDealerCard((prevCards) => {
+                const updatedCards = [...prevCards]; // Create a copy of the current card array
+                updatedCards[dealerCards] = stack[deckIndex]; // Update the first card with stack[0]
+                return updatedCards; // Return the updated array
+            });
+        }
+        else{
+            setCard((prevCards) => {
+                const updatedCards = [...prevCards]; // Create a copy of the current card array
+                updatedCards[playerCards] = stack[deckIndex]; // Update the first card with stack[0]
+                return updatedCards; // Return the updated array
+            });
+        }
         
         setDeckIndex((prevIndex) => prevIndex + 1);
-        console.log("player has: " + (playerCards + 1) + " cards");
         setStack((prevStack)=> prevStack.slice(0,-1));
-        console.log(stack.length);
-        //console.log("poped: " + card[0].number  ); 1step behind
-        // countScore(card[playerCards].number);
         setPlayerCards((prevCards) => prevCards + 1);
     };
 
-    const countScore = (score) => {
+    const countScore = (score, dealer) => {
         setplayerScore((prevScore) => prevScore + score);
     };
 
@@ -108,33 +118,32 @@ function Blackjack() {
         
     };
 
-    useEffect(() => {
-            if (!deck) {
-                shuffleDeck();
-                setDeck((prev) => !prev)
-            }
-            else{
-            }
-        }, []);
+    const reset = () => {
+        setPlayerCards(0);
+        setplayerScore(0);
+        setPlayerFat(false);
+        //sets all players cards to blank
+        setCard((prevCards) => {
+            return prevCards.map(() => ({ text: "", number: 0 }));
+        });
+    };
+
+    
 
     const handleCardValue = (card) => {
         setplayerScore((prevScore) => prevScore + card.number);
     }
 
     const buttonStartQuitPressed = () =>{
-        // setPlayerCards(1);
-        
         setstarted((prev) => !prev);
         setstartButt(started ? "Start" : "quit");
+        started ? reset() : "";
         started ? "": shuffle();
-        pop();
-        
-        
-        
+        started ? "" : pop(false);
         console.log(started);
     };
     const buttonHitPressed = () =>{
-        pop();
+        pop(false);
     };
     const buttonStayPressed = () =>{
         
@@ -143,22 +152,25 @@ function Blackjack() {
         setplayerScore(card[0].number + card[1].number + card[2].number)
 
         
-    }, [card])
+    }, [card]);
     useEffect(() => {
-        if(playerScore > 21)
-            {
+        if(playerScore > 21){
                 setPlayerFat((prev) => !prev);
                 buttonStartQuitPressed();
-                for(let i = 0; i < 3; i++){
-                    setCard((prevCards) => {
-                        const updatedCards = [...prevCards]
-                        updatedCards[i] = [{text: "", number: 0}];
-                        return updatedCards;
-                    })
-                }
-            }
-    }, [playerScore])
-    // setplayerScore(card[0].number + card[1].number + card[2].number)
+                
+            reset();
+        }
+
+    }, [playerScore]);
+//shuffles deck in begining
+    useEffect(() => {
+        if (!deck) {
+            shuffleDeck();
+            setDeck((prev) => !prev)
+        }
+        else{
+        }
+    }, []);
 
     return(
         <div className = 'back'>
@@ -168,15 +180,17 @@ function Blackjack() {
             <h1>{started ? "" : rules}</h1>
             {started ? 
             <div className='player-container'>
-                {/* <h1 className='player'>{playerCards >= 1 ? <Deck onCardDraw={handleCardValue}/> : ""}</h1>
-                <h1 className='player'>{playerCards >= 2 ? <Deck onCardDraw={handleCardValue}/> : ""}</h1>
-                <h1 className='player'>{playerCards >= 3 ? <Deck onCardDraw={handleCardValue}/> : ""}</h1> */}
+                {/*Players cards */}
                 <h1 className='player'>{playerCards >= 1 ? card[0].text + card[0].number : ""}</h1>
                 <h1 className='player'>{playerCards >= 2 ? card[1].text + card[1].number : ""}</h1>
                 <h1 className='player'>{playerCards >= 3 ? card[2].text + card[2].number : ""}</h1>
             </div>
             :
             ""};
+            <div className='log'>
+                <h1>Log:</h1>
+                <h1></h1>
+            </div>
             <div >
                 <button className = "startButton" onClick={() => (buttonStartQuitPressed())}>
                     {startButt}
