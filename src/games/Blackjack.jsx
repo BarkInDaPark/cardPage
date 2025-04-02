@@ -148,11 +148,14 @@ function Blackjack() {
     const buttonStayPressed = () =>{
         
     };
+    
+    //sets players score
     useEffect (() => {
         setplayerScore(card[0].number + card[1].number + card[2].number)
 
         
     }, [card]);
+    //checks if player got fat
     useEffect(() => {
         if(playerScore > 21){
                 setPlayerFat((prev) => !prev);
@@ -162,7 +165,7 @@ function Blackjack() {
         }
 
     }, [playerScore]);
-//shuffles deck in begining
+    //shuffles deck in begining
     useEffect(() => {
         if (!deck) {
             shuffleDeck();
@@ -183,7 +186,7 @@ function Blackjack() {
                 {/*Players cards */}
                 <h1 className='player'>{playerCards >= 1 ? card[0].text + card[0].number : ""}</h1>
                 <h1 className='player'>{playerCards >= 2 ? card[1].text + card[1].number : ""}</h1>
-                <h1 className='player'>{playerCards >= 3 ? card[2].text + card[2].number : ""}</h1>
+                {playerCards >= 3 ? <h1 className='player'>{playerCards >= 3 ? card[2].text + card[2].number : ""}</h1> :""};
             </div>
             :
             ""};

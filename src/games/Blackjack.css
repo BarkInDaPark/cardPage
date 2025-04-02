@@ -61,8 +61,8 @@
 
 .player-container{
     display: flex;
-    padding-left: 25%;
-    padding-top: 25%;
+    padding-left: 40%;
+    padding-top: 15%;
 
     
     
@@ -71,16 +71,17 @@
 }
 
 .player:hover{
-    border-radius: 5rem;
+    border-radius: 2rem;
     transition: 1s;
 }
 
 .player{
-    height: 25rem;
-    width: 30rem;
+    
+    height: 20rem;
+    width:15rem;
     border: 3rem;
     border-radius: 1rem;
-    margin: 1rem;
+    margin: 2rem;
     background-color: antiquewhite;
     outline: 2px solid black;
 }
@@ -89,6 +90,7 @@
     background-color: antiquewhite;
     display: block;
     position: absolute;
+    top: 32rem;
     border-radius: 2rem;
     border-color: black;
     outline: auto;
