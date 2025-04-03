@@ -1,7 +1,9 @@
 .back{
+    position: absolute;
     color: rgb(0, 0, 0);
     background-color: rgb(0, 128, 28);
-    height: 100vh;
+    height: 95vh;
+    width: 200vh;
     display: block;
 
 }
@@ -62,12 +64,15 @@
 .player-container{
     display: flex;
     padding-left: 40%;
-    padding-top: 15%;
+    padding-top: 5%;
+}
 
-    
-    
-    
-    
+.dealer-container{
+    position:absolute;
+    top: 0;
+    display: flex;
+    padding-left: 40%;
+    margin-top: 1px;
 }
 
 .player:hover{
@@ -86,16 +91,31 @@
     outline: 2px solid black;
 }
 
+.dealer{
+    
+    height: 20rem;
+    width:15rem;
+    border: 3rem;
+    border-radius: 1rem;
+    margin: 2rem;
+    background-color: antiquewhite;
+    outline: 2px solid black;
+}
+
 .log{
     background-color: antiquewhite;
-    display: block;
+    display:flow-root;
     position: absolute;
     top: 32rem;
     border-radius: 2rem;
     border-color: black;
     outline: auto;
     margin: 4rem;
-    padding: 0 10rem 10rem 10rem;
+    padding: 0 20rem 10rem 1rem;
+    line-height: 0.3rem;
+
+    
+    
     
     font-size: small;
 }

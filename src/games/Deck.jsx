@@ -136,7 +136,6 @@ function Deck(){
             shuffleDeck();
             setDeck((prev) => !prev)
             pop();
-            // pop();  
         }
         else{
             pop();
