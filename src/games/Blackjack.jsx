@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Blackjack.css';
 import Deck from './Deck';
+import { use } from 'react';
 function Blackjack() {
     const [startButt, setstartButt] = useState("Start!");
     const [started, setstarted] = useState(false);
@@ -91,7 +92,7 @@ function Blackjack() {
     };
 
     const dealerPop = (index) => {
-        
+        let score = stack[index].value;
         setDealerCard((prevCards) => {
             const updatedCards = [...prevCards]; // Create a copy of the current card array
             updatedCards[dealerCards] = stack[index]; // Update the first card with stack[0]
@@ -100,6 +101,7 @@ function Blackjack() {
         setDeckIndex((prevIndex) => prevIndex + 1);
         // setStack((prevStack)=> prevStack.slice(0,-1));
         setDealerCards((prevCards) => prevCards + 1);
+        return score;
 
         
     }
@@ -168,8 +170,21 @@ function Blackjack() {
     };
 
     const buttonStayPressed = () =>{
+        writeLog("staying");
+        let score = dealerCard[0].value;
+        // dealer logic
+        while(score < 17){
+            score += dealerPop(deckIndex);
+            writeLog("dealer score: " + dealerScore);
+            writeLog("dealer poping card");
+            setdealerScore(dealerCard[0].value + dealerCard[1].value + dealerCard[2].value);
+        };
         
     };
+
+    useEffect(() => {
+      
+    }, [dealerCard]);
     
     //sets players score
     useEffect (() => {
@@ -177,15 +192,41 @@ function Blackjack() {
 
         
     }, [card]);
+
+    useEffect (() => {
+        setdealerScore(dealerCard[0].value + dealerCard[1].value + dealerCard[2].value)
+    }, [dealerCard]);
+
     //checks if player got fat
     useEffect(() => {
         if(playerScore > 21){
                 setPlayerFat((prev) => !prev);
                 buttonStartQuitPressed();
+                writeLog("You got fat!");
                 
             reset();
-        }
+        }else if (playerScore === 21){
+            writeLog("You got blackjack!");
+            reset();
+        };
     }, [playerScore]);
+
+    //checking if player got fat or blackjack
+    useEffect(() => {
+        if(dealerScore > 21){
+            writeLog("Dealer got fat!");
+            reset();
+        }else if (dealerScore === 21){
+            writeLog("Dealer got blackjack!");
+            reset();
+        }else if (dealerScore < 17 && dealerCard[1]){
+            dealerPop(deckIndex);
+            writeLog("Dealer poping card");
+        }
+
+    }, [dealerScore]);
+
+
     //shuffles deck in begining
     useEffect(() => {
         if (!deck) {
@@ -196,31 +237,19 @@ function Blackjack() {
         }
     }, []);
 
-    // useEffect(() => {
-    //     setDealerCard((prevCards) => {
-    //         const updatedCards = [...prevCards]; // Create a copy of the current card array
-    //         updatedCards[dealerCards] = stack[deckIndex]; // Update the first card with stack[0]
-    //         return updatedCards; // Return the updated array
-    //     });
-
-    //     setDeckIndex((prevIndex) => prevIndex + 1);
-    //     setStack((prevStack)=> prevStack.slice(0,-1));
-    // }, [dealerCards]);
-
-    // useEffect(() => {
-    //     setCard((prevCards) => {
-    //         const updatedCards = [...prevCards]; // Create a copy of the current card array
-    //         updatedCards[playerCards] = stack[deckIndex]; // Update the first card with stack[0]
-    //         return updatedCards; // Return the updated array
-    //     });
-    //     setDeckIndex((prevIndex) => prevIndex + 1);
-    //     setStack((prevStack)=> prevStack.slice(0,-1));
-    // }, [playerCards]);
+    //scrolls log to the bottom when new message is added
+    useEffect(() => {
+        const logContainer = document.querySelector('.log');
+        if (logContainer) {
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+    }, [log]);
 
     return(
         <div className = 'back'>
             <h1>blackjack</h1>
             <h1>{playerFat ? "YOUR FAT": "" }</h1>
+            <h1>Dealer Score: {dealerScore}</h1>
             <h1>Score: {playerFat ? "" : playerScore}</h1>
             <h1>{started ? "" : rules}</h1>
             {started ?
@@ -235,9 +264,9 @@ function Blackjack() {
             {started ? 
             <div className='player-container'>
                 {/*Players cards */}
-                <h1 className='player'>{playerCards >= 1 ? card[0].text + card[0].name : ""}</h1>
-                <h1 className='player'>{playerCards >= 2 ? card[1].text + card[1].name : ""}</h1>
-                {playerCards >= 3 ? <h1 className='player'>{playerCards >= 3 ? card[2].text + card[2].name : ""}</h1> :""}
+                <h1 className='player'>{playerCards >= 1 && card[1]?.text ? card[0].text + card[0].name : ""}</h1>
+                <h1 className='player'>{playerCards >= 2 && card[1]?.text ? card[1].text + card[1].name : ""}</h1>
+                {playerCards >= 3 && card[2]?.text ? <h1 className='player'>{playerCards >= 3 ? card[2].text + card[2].name : ""}</h1> :""}
             </div>
             :
             ""};
@@ -254,7 +283,7 @@ function Blackjack() {
                 {started && playerCards < 4 && !playerFat ? <button className = "hitButton" onClick={buttonHitPressed}>
                     Hit
                 </button> : ""}
-                {started && !playerFat ? <button className = "stayButton">
+                {started && !playerFat ? <button className = "stayButton" onClick={buttonStayPressed}>
                     Stay
                 </button> : ""} 
             <div></div>
