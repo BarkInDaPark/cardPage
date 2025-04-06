@@ -76,31 +76,31 @@ function Blackjack() {
     const [logIndex, setLogIndex] = useState(0);
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-    const pop = () => {
-        // if (stack.length === 0) return;
+    const pop = (index) => {
+        if (stack.length === 0) return;
 
-        //     setCard((prevCards) => {
-        //         const updatedCards = [...prevCards]; // Create a copy of the current card array
-        //         updatedCards[playerCards] = stack[deckIndex]; // Update the first card with stack[0]
-        //         return updatedCards; // Return the updated array
-        //     });
-        // setDeckIndex((prevIndex) => prevIndex + 1);
+            setCard((prevCards) => {
+                const updatedCards = [...prevCards]; // Create a copy of the current card array
+                updatedCards[playerCards] = stack[index]; // Update the first card with stack[0]
+                return updatedCards; // Return the updated array
+            });
+        setDeckIndex((prevIndex) => prevIndex + 1);
         // setStack((prevStack)=> prevStack.slice(0,-1));
         setPlayerCards((prevCards) => prevCards + 1);
         
     };
 
-    const dealerPop = () => {
-        // await delay(5000);
-        setDealerCards((prevCards) => prevCards + 1);
-        // setDealerCard((prevCards) => {
-        //     const updatedCards = [...prevCards]; // Create a copy of the current card array
-        //     updatedCards[dealerCards] = stack[deckIndex]; // Update the first card with stack[0]
-        //     return updatedCards; // Return the updated array
-        // });
-
-        // setDeckIndex((prevIndex) => prevIndex + 1);
+    const dealerPop = (index) => {
+        
+        setDealerCard((prevCards) => {
+            const updatedCards = [...prevCards]; // Create a copy of the current card array
+            updatedCards[dealerCards] = stack[index]; // Update the first card with stack[0]
+            return updatedCards; // Return the updated array
+        });
+        setDeckIndex((prevIndex) => prevIndex + 1);
         // setStack((prevStack)=> prevStack.slice(0,-1));
+        setDealerCards((prevCards) => prevCards + 1);
+
         
     }
 
@@ -148,12 +148,14 @@ function Blackjack() {
 
 
     const buttonStartQuitPressed = () =>{
+        const  index = deckIndex;
         setstarted((prev) => !prev);
         setstartButt(started ? "Start" : "quit");
         started ? reset() : "";
         started ? "": shuffle();
-        started ? "" : pop();
-        started ? "" : dealerPop();
+        started ? "" : pop(index);
+        started ? "" : dealerPop(index + 1);
+        setDeckIndex((prevIndex) => prevIndex + 2);
 
         
         
@@ -161,7 +163,7 @@ function Blackjack() {
     };
 
     const buttonHitPressed = () =>{
-        pop(false);
+        pop(deckIndex);
         writeLog("poping card");
     };
 
@@ -194,26 +196,26 @@ function Blackjack() {
         }
     }, []);
 
-    useEffect(() => {
-        setDealerCard((prevCards) => {
-            const updatedCards = [...prevCards]; // Create a copy of the current card array
-            updatedCards[dealerCards] = stack[deckIndex]; // Update the first card with stack[0]
-            return updatedCards; // Return the updated array
-        });
+    // useEffect(() => {
+    //     setDealerCard((prevCards) => {
+    //         const updatedCards = [...prevCards]; // Create a copy of the current card array
+    //         updatedCards[dealerCards] = stack[deckIndex]; // Update the first card with stack[0]
+    //         return updatedCards; // Return the updated array
+    //     });
 
-        setDeckIndex((prevIndex) => prevIndex + 1);
-        setStack((prevStack)=> prevStack.slice(0,-1));
-    }, [dealerCards]);
+    //     setDeckIndex((prevIndex) => prevIndex + 1);
+    //     setStack((prevStack)=> prevStack.slice(0,-1));
+    // }, [dealerCards]);
 
-    useEffect(() => {
-        setCard((prevCards) => {
-            const updatedCards = [...prevCards]; // Create a copy of the current card array
-            updatedCards[playerCards] = stack[deckIndex]; // Update the first card with stack[0]
-            return updatedCards; // Return the updated array
-        });
-        setDeckIndex((prevIndex) => prevIndex + 1);
-        setStack((prevStack)=> prevStack.slice(0,-1));
-    }, [playerCards]);
+    // useEffect(() => {
+    //     setCard((prevCards) => {
+    //         const updatedCards = [...prevCards]; // Create a copy of the current card array
+    //         updatedCards[playerCards] = stack[deckIndex]; // Update the first card with stack[0]
+    //         return updatedCards; // Return the updated array
+    //     });
+    //     setDeckIndex((prevIndex) => prevIndex + 1);
+    //     setStack((prevStack)=> prevStack.slice(0,-1));
+    // }, [playerCards]);
 
     return(
         <div className = 'back'>
@@ -223,9 +225,9 @@ function Blackjack() {
             <h1>{started ? "" : rules}</h1>
             {started ?
             <div className='dealer-container'>
-                {dealerCards >=1 ? <h1 className='dealer'>{dealerCards >=1 ? dealerCard[0].text + dealerCard[0].name : ""}</h1>: ""}
-                {dealerCards >=2 ? <h1 className='dealer'>{dealerCards >=2 ? dealerCard[1].text + dealerCard[1].name : ""}</h1>: ""}
-                {dealerCards >=3 ? <h1 className='dealer'>{dealerCards >=3 ? dealerCard[2].text + dealerCard[2].name : ""}</h1>: ""}
+                {dealerCards >=1 && dealerCard[0] ? <h1 className='dealer'>{dealerCards >=1 ? dealerCard[0].text + dealerCard[0].name : ""}</h1>: ""}
+                {dealerCards >=2 && dealerCard[1] ? <h1 className='dealer'>{dealerCards >=2 ? dealerCard[1].text + dealerCard[1].name : ""}</h1>: ""}
+                {dealerCards >=3 && dealerCard[2] ? <h1 className='dealer'>{dealerCards >=3 ? dealerCard[2].text + dealerCard[2].name : ""}</h1>: ""}
             </div>
             :
             ""
