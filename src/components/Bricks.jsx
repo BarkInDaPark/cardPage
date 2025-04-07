@@ -14,9 +14,11 @@ function Bricks({ name }) {
         <div className = "brick-container">
             {cardNameArr.map((names) => (
             <button className="brick"
-            key={names} onClick={() => navigate(`/${names}`)}>
-            {   names}
+            key={names} onClick={() => navigate(`/${names}`)} >
+                <img src={`https://picsum.photos/150`} alt="Random" className="brick-image" ></img>
+                {names}
             </button>
+            
             ))}
         </div>
     )
