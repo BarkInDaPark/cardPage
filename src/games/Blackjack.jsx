@@ -6,6 +6,7 @@ function Blackjack() {
     const [startButt, setstartButt] = useState("Start!");
     const [started, setstarted] = useState(false);
     const [showRules, setShowRules] = useState(true);
+    const [stay, setStay] = useState(false);
     const [playerScore, setplayerScore] = useState(0);
     const [playerCards, setPlayerCards] = useState(0);
     const [playerFat, setPlayerFat] = useState(false);
@@ -123,6 +124,7 @@ function Blackjack() {
     };
 
     const reset = () => {
+        setStay((prev) => !prev);
         setPlayerCards(0);
         setplayerScore(0);
         setPlayerFat(false);
@@ -172,13 +174,15 @@ function Blackjack() {
     const buttonStayPressed = () =>{
         writeLog("staying");
         let score = dealerCard[0].value;
-        // dealer logic
-        while(score < 17){
-            score += dealerPop(deckIndex);
-            writeLog("dealer score: " + dealerScore);
+        const index = deckIndex;
+        setStay((prev) => !prev);
+        dealerPop(index);
+        writeLog("dealer poping card");
+        if(dealerScore < 17){
+            dealerPop(index + 1);
             writeLog("dealer poping card");
-            setdealerScore(dealerCard[0].value + dealerCard[1].value + dealerCard[2].value);
-        };
+        }
+
         
     };
 
@@ -219,12 +223,13 @@ function Blackjack() {
         }else if (dealerScore === 21){
             writeLog("Dealer got blackjack!");
             reset();
-        }else if (dealerScore < 17 && dealerCard[1]){
-            dealerPop(deckIndex);
-            writeLog("Dealer poping card");
         }
+        // }else if (dealerScore < 17 && dealerCard[1]){
+        //     dealerPop(deckIndex);
+        //     writeLog("Dealer poping card");
+        // }
 
-    }, [dealerScore]);
+    }, [stay]);
 
 
     //shuffles deck in begining
